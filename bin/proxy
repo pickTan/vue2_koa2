@@ -55,7 +55,7 @@ export default async function ({
     checkcode = getChckCode(timestamp, APP_CODE, getAuthorization(func).m_id, getAuthorization(func).access_key),
     Accept= 'application/json',
     ContentType = 'application/json',
-    openid = '' ,                   //微信openid
+    openid = '' ,                         //微信openid
     UserAgent = USER_AGENT,
     Authorization = getAuthorization(func).authorization,  //m_id+access_key base64
     DeviceToken= global.token,            //token值
