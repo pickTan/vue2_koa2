@@ -1,0 +1,134 @@
+/**
+ * 反向代理
+ * Created by pengfeng on 2016/10/18.
+ */
+import fetch from 'node-fetch'
+import crypto from 'crypto'
+import {M_ID, ACCESS_KEY, APP_CODE, PORT_URL, FALSE_AUTHORIZATION, TRUE_AUTHORIZATION, USER_AGENT,GUEST} from './parameter'
+
+/**
+ * 创建访问七
+ * @param args
+ */
+const postJava = (...args) => fetch.apply(null, args).then(res=>res.json())
+
+/**
+ * 获取安全认证信息
+ * @param portName  接口名
+ * @returns {*}
+ */
+const getAuthorization = (portName) => (
+    //安全缺省的接口
+    portName == 'app_get_access_token'
+)
+    ? {authorization:FALSE_AUTHORIZATION,m_id:GUEST,access_key:GUEST }
+    : {authorization:TRUE_AUTHORIZATION,m_id:M_ID,access_key:ACCESS_KEY }
+
+
+/**
+ * 访问java后台，默认访问令牌接口
+ * @param portUrl
+ * @param method
+ * @param func
+ * @param appcode
+ * @param timestamp
+ * @param seqid
+ * @param datatype
+ * @param checkcode
+ * @param Accept
+ * @param ContentType
+ * @param openid
+ * @param UserAgent
+ * @param Authorization
+ * @param DeviceToken
+ * @param bodyBody
+ * @returns {*}
+ */
+export default async function ({
+    portUrl = PORT_URL,
+    method = 'POST',
+    func = 'app_get_access_token',
+    appcode = APP_CODE,
+    timestamp = (new Date).format('yyyyMMddhhmmss'),
+    seqid = '',
+    datatype = '2',
+    checkcode = getChckCode(timestamp, APP_CODE, getAuthorization(func).m_id, getAuthorization(func).access_key),
+    Accept= 'application/json',
+    ContentType = 'application/json',
+    openid = '' ,                   //微信openid
+    UserAgent = USER_AGENT,
+    Authorization = getAuthorization(func).authorization,  //m_id+access_key base64
+    DeviceToken= global.token,            //token值
+    bodyBody = {
+        'm_id': M_ID,
+        'access_key': ACCESS_KEY
+    }
+}={}) {
+    const url = portUrl;
+    const headers = {
+        'Accept': Accept,
+        'Content-Type': ContentType,
+        'User-Agent': UserAgent,
+        'Authorization': Authorization, //m_id+access_key base64
+        'DeviceToken': DeviceToken           //token值
+    };
+    const bodyHeader = {
+        'func': func,
+        'appcode': appcode,
+        'timestamp': timestamp,
+        'seqid': seqid,
+        'datatype': datatype,
+        'openid':openid,
+        'checkcode': checkcode
+    };
+
+    const http = {
+        'method': method,
+        'headers': headers,
+        'body': JSON.stringify({header: bodyHeader, body: bodyBody})
+    }
+    const value = await postJava(url, http);
+    value.body.status = value.header.status;
+    value.body.info = value.header.info;
+    return value.body;
+};
+
+
+/**
+ *间格式化
+ * @param fmt
+ * @returns {*}
+ */
+Date.prototype.format = function (fmt) {
+    var o = {
+        "M+": this.getMonth() + 1, //月份
+        "d+": this.getDate(), //日
+        "h+": this.getHours(), //小时
+        "m+": this.getMinutes(), //分
+        "s+": this.getSeconds(), //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S": this.getMilliseconds() //毫秒
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt
+};
+/**
+ * md加密获取chckcode
+ * @param timestamp
+ * @param appcode
+ * @param username
+ * @param password
+ * @returns {*}
+ */
+function getChckCode(timestamp, appcode, username, password) {
+    let sum = parseInt(timestamp.substring(6, 8))// yyyyMMddHHmmss
+    sum += parseInt(timestamp.substring(8, 10))
+    sum += parseInt(timestamp.substring(10, 12))
+    sum += parseInt(timestamp.substring(12, 14))
+    const auth = `${appcode}:${sum}:${username}:${password}`
+    const hasher = crypto.createHash("md5")
+    hasher.update(auth)
+    return hasher.digest('hex')//hashmsg为加密之后的数据
+}

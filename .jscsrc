@@ -1,0 +1,26 @@
+
+{
+  "preset": "airbnb",
+  "excludeFiles": [
+    "dist/**", "node_modules/**", "webpack*", "styleguide.js"
+  ],
+  "requirePaddingNewLinesBeforeLineComments": null, // 不强制注释前空行
+  "requireTrailingComma": null, // 不强制要求末尾逗号
+  "validateQuoteMarks": null, // 字符串单引号，React 属性双引号
+  "validateIndentation": {
+    "value": 2,
+    "allExcept": [
+      "comments" // 忽略注释中的缩进
+    ]
+  },
+  "maximumLineLength": {
+    "value": 80, // 单行最长80个字符，注释除外
+    "allExcept": [
+      "comments", "urlComments", "functionSignature"
+    ]
+  },
+  "requirePaddingNewLinesAfterBlocks": null,// 区块之间不强制空行
+  "disallowEmptyBlocks": {
+    "allExcept": "comments" // 不把注释当成空处理
+  }
+}
