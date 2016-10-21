@@ -82,13 +82,12 @@ var adaptUILayout = (function(){
         //获取最终dpi
         targetDensitydpi = uiWidth / deviceWidth * devicePixelRatio * 160;
 
-        //use viewport width attribute on the iPhone or iPad device
-        //use viewport target-densitydpi attribute on the Android device
+
         initialContent   = isiOS
             ? 'width='+ uiWidth +', user-scalable=no'
             : 'target-densitydpi=' + targetDensitydpi + ', width='+ uiWidth+', user-scalable=no';
 
-        //add a new meta node of viewport in head node
+
         head = document.getElementsByTagName('head');
         viewport = document.createElement('meta');
         viewport.name = 'viewport';

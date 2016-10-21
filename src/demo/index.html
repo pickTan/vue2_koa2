@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>首页</title>
     <script src="../js/adapter.js" ></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" ></script>
     <script src="../css/iconfont.css" ></script>
 </head>
 <style>
@@ -14,6 +15,7 @@
         box-sizing: border-box;
         padding: 0;
         margin: 0;
+        line-height: 1em;
     }
 
     body {
@@ -40,12 +42,15 @@
         outline : none;
 
     }
+
     div.content{
 
     }
+
     div.content img.activity-img{
         width: 100%;
     }
+
     section.pro-list{
         display: flex;
         display: -webkit-flex; /* Safari */
@@ -53,51 +58,121 @@
         flex-wrap: wrap;
         justify-content:space-between;
     }
+
     section.pro-list h3 {
         text-align: center;
         font-size: 24px;
     }
 
+
+    /***********收货人地址列表****************/
+    ul.address-lst {
+    }
+    ul.address-lst li.one-address{
+        height: 84px;
+        width: 100%;
+        padding: 10px;
+        font-size: 15px;
+        background-color: white;
+        margin-bottom: 13px;
+    }
+    ul.address-lst li p:first-child{
+        font-size: 18px;
+        margin-bottom: 23px;
+        position: relative;
+    }
+
+    ul.address-lst li p:first-child span.choice-cnee{
+        color: #ef1837;
+    }
+    ul.address-lst li p:first-child span.addr-phone{
+        position: absolute;
+        right: 0;
+    }
+
+    ul li.sure-btn {
+        padding: 0;
+        height:63px;
+        width:502px;
+        text-align: center;
+        font-size: 23px;
+        line-height: 63px;
+        background-color: #ef1837;
+        color: white;
+        margin: auto;
+        border-radius: 31px;
+        margin-top: 215px;
+    }
+
+
 </style>
 <body>
-    <header>
-        <input class="search" placeholder="商品关键字"  />
-    </header>
-    <div class="content">
-         <img class="activity-img" src="../images/index_banner01.jpg">
-        <section  class="pro-list hot-pro">
-            <h3>热销产品</h3>
-            <ul>
-                <li ></li>
-                <li ></li>
-                <li ></li>
-                <li ></li>
-                <li ></li>
-                <li ></li>
-            </ul>
-        </section>
-        <section  class="pro-list like-pro">
-            <h3>猜你喜欢</h3>
-            <ul class="pro-list" >
-                <li >
-                    <em></em>
-                </li>
-                <li ></li>
-                <li ></li>
-                <li ></li>
-                <li ></li>
-                <li ></li>
-            </ul>
-        </section>
+    <!--<header>-->
+        <!--<input class="search" placeholder="商品关键字"  />-->
+    <!--</header>-->
+    <!--<div class="content">-->
+         <!--<img class="activity-img" src="../images/index_banner01.jpg">-->
+        <!--<section  class="pro-list hot-pro">-->
+            <!--<h3><em class="title-left-img"></em>热销产品<em class="title-left-img"></em></h3>-->
+            <!--<ul>-->
+                <!--<li ></li>-->
+                <!--<li ></li>-->
+                <!--<li ></li>-->
+                <!--<li ></li>-->
+                <!--<li ></li>-->
+                <!--<li ></li>-->
+            <!--</ul>-->
+        <!--</section>-->
+        <!--<section  class="pro-list like-pro">-->
+            <!--<h3>猜你喜欢</h3>-->
+            <!--<ul class="pro-list" >-->
+                <!--<li >-->
+                    <!--<em></em>-->
+                <!--</li>-->
+                <!--<li ></li>-->
+                <!--<li ></li>-->
+                <!--<li ></li>-->
+                <!--<li ></li>-->
+                <!--<li ></li>-->
+            <!--</ul>-->
+        <!--</section>-->
 
-    </div>
-    <footer>
-        <ul>
-            <li>首页</li>
-            <li>优惠</li>
-            <li>分类</li>
-            <li>我的</li>
-        </ul>
-    </footer>
+    <!--</div>-->
+    <!--<footer>-->
+        <!--<ul>-->
+            <!--<li>首页</li>-->
+            <!--<li>优惠</li>-->
+            <!--<li>分类</li>-->
+            <!--<li>我的</li>-->
+        <!--</ul>-->
+    <!--</footer>-->
+
+
+    <ul class="address-lst">
+        <li class="one-address">
+            <p>
+                <em class="choice-icon"></em>
+                <span class="choice-cnee">收货人:陈文杰</span>
+                <span class="addr-phone">13855588886</span>
+            </p>
+            <p>
+                <label>收货人地址:</label>
+                <span>广州市天河区华穗路406号保利克洛维中景大厦1305单元</span>
+            </p>
+        </li>
+<li class="one-address">
+            <p>
+                <em class="choice-icon"></em>
+                <span class="choice-cnee">收货人:陈文杰</span>
+                <span class="addr-phone">13855588886</span>
+            </p>
+            <p>
+                <label>收货人地址:</label>
+                <span>广州市天河区华穗路406号保利克洛维中景大厦1305单元</span>
+            </p>
+        </li>
+
+        <li class="sure-btn">管理收货地址</li>
+    </ul>
 </body>
 </html>
